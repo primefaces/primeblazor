@@ -1,0 +1,81 @@
+@namespace PrimeBlazor
+
+<CascadingValue Value="this">
+    <div class="p-accordion p-component">
+        @foreach (var item in tabs.Select((tab, i) => new {i, tab}))
+        {
+            <div class="p-accordion-tab @(IsTabActive(item.i) ? "p-accordion-tab-active": "")">
+                <div class="p-accordion-header @(IsTabActive(item.i) ? "p-highlight": "")">
+                    <a role="tab" class="p-accordion-header-link" @onclick="e => OnTabClick(e, item.i)">
+                        <span></span>
+                        @if (item.tab.HeaderText != null)
+                        {
+                            <span class="p-accordion-header-text">@item.tab.HeaderText</span>
+                        }
+                        @item.tab.Header
+                    </a>
+                </div>
+                <div class="p-toggleable-content" style="display: @(IsTabActive(item.i) ? "block": "none")">
+                    <div class="p-accordion-content">
+                        @item.tab.ChildContent
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @ChildContent
+</CascadingValue>
+
+@code {
+
+    [Parameter]
+    public IList<int> ActiveIndex { get; set; } = new List<int>();
+
+    [Parameter]
+    public bool Multiple { get; set; }
+
+    [Parameter]
+    public EventCallback<IList<int>> ActiveIndexChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    internal IList<PrimeAccordionTab> tabs = new List<PrimeAccordionTab>();
+
+    internal void AddTab(PrimeAccordionTab tab)
+    {
+        tabs.Add(tab);
+        StateHasChanged();
+    }
+
+    private async Task OnTabClick(MouseEventArgs e, int index)
+    {
+        bool active = IsTabActive(index);
+
+        if (Multiple)
+        {
+            if (active)
+            {
+                ActiveIndex.Remove(index);
+            }
+            else
+            {
+                if (ActiveIndex == null)
+                    ActiveIndex = new List<int>(){index};
+                else
+                    ((IList<int>) ActiveIndex).Add(index);
+            }
+        }
+        else
+        {
+            ActiveIndex = new List<int>{index};
+        }
+
+        await ActiveIndexChanged.InvokeAsync(ActiveIndex);
+    }
+
+    internal bool IsTabActive(int index) {
+        return ActiveIndex != null ? ActiveIndex.Contains(index) : false;
+    }
+    
+}

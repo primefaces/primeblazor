@@ -1,0 +1,44 @@
+@namespace PrimeBlazor
+@typeparam TItem
+
+<div>
+    <div class="p-listbox p-component @CssClass">
+        <div class="p-listbox-list-wrapper">
+            <ul class="p-listbox-list">
+               @foreach (TItem option in Options) 
+               {
+                   <li class="p-listbox-item @(isSelected(option) ? "p-highlight": "")" @onclick="() => SelectOption(option)">@Item(option)</li>
+               } 
+            </ul>
+        </div>
+    </div>
+</div>
+
+@code {
+    
+    [Parameter]
+    public TItem Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TItem> ValueChanged { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter] 
+    public IList<TItem> Options { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> Item { get; set; }
+
+    private async Task SelectOption(TItem option)
+    {
+        await ValueChanged.InvokeAsync(option);
+    }
+
+    private bool isSelected(TItem item) 
+    {
+        return item.Equals(Value);
+    }
+
+}

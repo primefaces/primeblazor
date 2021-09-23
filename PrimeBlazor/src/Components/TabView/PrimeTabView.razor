@@ -1,0 +1,63 @@
+@namespace PrimeBlazor
+
+<CascadingValue Value="this">
+    <div class="p-tabview p-component">
+        <div class="p-tabview-nav-container">
+            <div class="p-tabview-nav-content">
+                <ul class="p-tabview-nav">
+                    @foreach (var item in tabs.Select((tab, i) => new {i, tab}))
+                    {
+                        <li role="presentation" class="@(ActiveIndex == item.i ? "p-highlight" : "")">
+                            <a role="tab" class="p-tabview-nav-link" @onclick="e => OnTabClick(e, item.i)">
+                                @if (item.tab.HeaderText != null)
+                                {
+                                    <span class="p-tabview-title">@item.tab.HeaderText</span>
+                                }
+                                @item.tab.Header
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="p-tabview-panels">
+            @foreach (var item in tabs.Select((tab, i) => new {i, tab}))
+            {
+                @if (tabs.IndexOf(item.tab) == ActiveIndex)
+                {
+                    <div class="p-tabview-panel">
+                        @item.tab.ChildContent
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    @ChildContent
+</CascadingValue>
+
+@code {
+
+    [Parameter]
+    public int ActiveIndex { get; set; } = 0;
+
+    [Parameter]
+    public EventCallback<int> ActiveIndexChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    internal IList<PrimeTabPanel> tabs = new List<PrimeTabPanel>();
+
+    internal void AddTab(PrimeTabPanel tab)
+    {
+        tabs.Add(tab);
+        StateHasChanged();
+    }
+
+    private async Task OnTabClick(MouseEventArgs e, int index)
+    {
+        ActiveIndex = index;
+        await ActiveIndexChanged.InvokeAsync(index);
+    }
+    
+}

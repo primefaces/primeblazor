@@ -1,0 +1,69 @@
+ @page "/inputtext"
+
+ <div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>InputText</h1>
+            <p>InputText renders a text field to enter data.</p>
+        </div>
+    </div>
+
+    <div class="content-section implementation">
+        <div class="card">
+            <h5>Basic</h5>
+            <PrimeInputText @bind-Value="value1" BindEvent="oninput" />
+            <span class="ml-2">@value1</span>
+
+            <h5>Floating Label</h5>
+            <span class="p-float-label">
+                <PrimeInputText Id="username" Type="text" @bind-Value="value2" />
+                <label for="username">Username</label>
+            </span>
+            <span class="ml-2">@value2</span>
+
+             <h5>Left Icon</h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                <PrimeInputText Type="text" Placeholder="Search" />
+            </span>
+
+            <h5>Right Icon</h5>
+            <span class="p-input-icon-right">
+                <i class="pi pi-spin pi-spinner" />
+                <PrimeInputText Type="text" />
+            </span>
+
+            <h5>Help Text</h5>
+            <div class="field">
+                <label for="username1" class="block">Username</label>
+                <PrimeInputText Id="username1" Type="username" Aria-DescribedBy="username1-help" CssClass="block" />
+                <small id="username1-help" class="block">Enter your username to reset your password.</small>
+            </div>
+
+            <h5>Invalid</h5>
+            <div class="field">
+                <label for="username2" class="block">Username</label>
+                <PrimeInputText Id="username2" Type="username" Aria-DescribedBy="username2-help" CssClass="p-invalid block" />
+                <small id="username2-help" class="p-error block">Username is not available.</small>
+            </div>
+
+            <h5>Disabled</h5>
+            <PrimeInputText Type="text" disabled />
+
+            <h5>Sizes</h5>
+            <div class="sizes">
+                <PrimeInputText Type="text" CssClass="p-inputtext-sm block mb-2" Placeholder="Small" />
+                <PrimeInputText Type="text" CssClass="block mb-2" Placeholder="Normal" />
+                <PrimeInputText type="text" CssClass="p-inputtext-lg block" Placeholder="Large" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public string value1;
+
+    public string value2;
+  
+}

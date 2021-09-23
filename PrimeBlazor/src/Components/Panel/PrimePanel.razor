@@ -1,0 +1,74 @@
+@namespace PrimeBlazor
+
+<div class="@containerCssClass @CssClass">
+    <div class="p-panel-header">
+        <div>
+            @Header
+        </div>
+        <div class="p-panel-icons">
+            @Icons
+            @if (Toggleable) 
+            {
+                <button class="p-panel-header-icon p-panel-toggler p-link" @onclick="Toggle" type="button"
+                    id="@(ariaId + "_header")" aria-controls="@(ariaId + "_content")" aria-expanded="@(!Collapsed)">
+                    <span class="@(Collapsed ? "pi pi-plus" : "pi pi-minus")"></span>
+                </button>
+            }
+        </div>
+    </div>
+    <div class="p-toggleable-content" role="region" id="@(ariaId + "_content")" aria-labelledby="@(ariaId + "_header")" style="display: @(Collapsed ? "none" : "block")">
+        <div class="p-panel-content">
+            @Content
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public bool Toggleable { get; set; }
+
+    [Parameter]
+    public bool Collapsed { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> CollapsedChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment Header { get; set; }
+
+    [Parameter]
+    public RenderFragment Content { get; set; }
+
+    [Parameter]
+    public RenderFragment Icons { get; set; }
+
+    public void Toggle() {
+        this.Collapsed = !this.Collapsed;
+        this.CollapsedChanged.InvokeAsync(this.Collapsed);
+    }
+
+    private string containerCssClass 
+    {
+        get
+        {
+            string cssClass = "p-panel p-component";
+            if (Toggleable)
+            {
+                cssClass += " p-panel-toggleable";
+            }
+            return cssClass;
+        }
+    }
+
+    private string ariaId 
+    {
+        get 
+        {
+            return Guid.NewGuid().ToString();
+        }
+    }
+}

@@ -1,0 +1,27 @@
+@namespace PrimeBlazor
+
+@code {
+
+    [CascadingParameter]
+    private PrimeTabView Parent { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string HeaderText { get; set; }
+
+    [Parameter]
+    public RenderFragment Header { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Parent == null)
+        {
+            throw new ArgumentNullException(nameof(Parent), "TabPanel must be located inside a TabView");
+        }
+        base.OnInitialized();
+        Parent.AddTab(this);
+    }
+
+}

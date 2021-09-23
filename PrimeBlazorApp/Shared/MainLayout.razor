@@ -1,0 +1,10 @@
+@inherits LayoutComponentBase
+
+<div class="layout-wrapper" :class="containerClass">
+    <TopBar />
+    <NavMenu />
+    <div class="layout-content">
+        @Body
+        <Footer />
+    </div>
+</div>

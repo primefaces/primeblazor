@@ -1,0 +1,56 @@
+﻿<div class="@NavMenuCssClass">
+    <NavLink href="" class="logo">
+        <img alt="logo" src="/images/primeblazor-logo.svg">
+    </NavLink>
+    <div class="layout-menu">
+        <div class="menu-category">General</div>
+        <div class="menu-items">
+            <NavLink href="setup">Get Started</NavLink>
+        </div>
+        <div class="menu-category">Support</div>
+        <div class="menu-items">
+            <NavLink href="https://forum.primefaces.org/viewforum.php?f=110">Forum</NavLink>
+            <NavLink href="https://discord.gg/gzKFYnpmCY">Discord Chat</NavLink>
+            <NavLink href="support">PRO Support</NavLink>
+        </div>
+        <div class="menu-category">Resources</div>
+        <div class="menu-items">
+            <NavLink href="https://www.youtube.com/channel/UCTgmp69aBOlLnPEqlUyetWw">PrimeTV</NavLink>
+            <NavLink href="https://github.com/primefaces/primeblazor">Source Code</NavLink>
+            <NavLink href="https://www.primefaces.org/store">Store</NavLink>
+            <NavLink href="https://twitter.com/primeblazor">Twitter</NavLink>
+        </div>
+        <div class="menu-category">PrimeIcons</div>
+        <div class="menu-items">
+            <NavLink href="icons">Icons 4.1</NavLink>
+        </div>
+        <div class="menu-category">Form</div>
+        <div class="menu-items">
+            <NavLink href="inputtext">InputText</NavLink>
+            <NavLink href="listbox">ListBox</NavLink>
+        </div>
+        <div class="menu-category">Button</div>
+        <div class="menu-items">
+            <NavLink href="button">Button</NavLink>
+        </div>
+        <div class="menu-category">Panel</div>
+        <div class="menu-items">
+            <NavLink href="accordion">Accordion</NavLink>
+            <NavLink href="panel">Panel</NavLink>
+            <NavLink href="tabview">TabView</NavLink>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private bool active = false;
+
+    private string NavMenuCssClass => active ? "layout-sidebar active" : "layout-sidebar";
+
+    private void ToggleNavMenu()
+    {
+        active = !active;
+    }
+    
+}

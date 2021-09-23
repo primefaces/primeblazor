@@ -1,0 +1,107 @@
+@namespace PrimeBlazor
+
+<button class="@buttonCssClass @CssClass" disabled="@Disabled" type="@Type" @attributes="ButtonAttributes" @onclick="onclick">
+    @if (ChildContent != null) 
+    {
+        @ChildContent
+    }
+    else {
+        @if(Loading && String.IsNullOrWhiteSpace(Icon)) {
+            <span class="@iconCssClass"></span>
+        }
+        @if(!String.IsNullOrWhiteSpace(Icon)) {
+            <span class="@iconCssClass"></span>
+        }
+        <span class="p-button-label">@(!String.IsNullOrWhiteSpace(Label) ? Label : "&nbsp;")</span>
+        @if(!String.IsNullOrWhiteSpace(Badge)) {
+            <span class="@badgeElementCssClass @BadgeCssClass">@Badge</span>
+        }
+    }
+</button>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public string IconPos { get; set; } = "left";
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } = "button";
+
+    [Parameter]
+    public string Badge { get; set; }
+
+    [Parameter]
+    public string BadgeCssClass { get; set; }
+
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public string LoadingIcon { get; set; } = "pi pi-spinner pi-spin";
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> onclick { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> ButtonAttributes { get; set; }
+
+    private string buttonCssClass {
+        get {
+            string cssClass = "p-button p-component";
+            if (!String.IsNullOrEmpty(Icon) && String.IsNullOrEmpty(Label)) {
+                cssClass += " p-button-icon-only";
+            }
+            if ((IconPos.Equals("top") ||IconPos.Equals("bottom")) && !String.IsNullOrEmpty(Label)) {
+                cssClass += " p-button-vertical";
+            }
+            if (Disabled || Loading) {
+                cssClass += " p-disabled";
+            }
+            if (Loading) {
+                cssClass += " p-button-loading";
+            }
+            if (Loading && String.IsNullOrEmpty(Icon) && !String.IsNullOrEmpty(Label)) {
+                cssClass += " p-button-loading-label-only";
+            }
+
+            return cssClass;
+        }
+    }
+
+    private string iconCssClass {
+        get {
+            string cssClass = Loading ? "p-button-loading-icon " + LoadingIcon: Icon;
+            cssClass += " p-button-icon";
+            if (!String.IsNullOrEmpty(Label)) {
+                cssClass += " p-button-icon-" + IconPos;
+            }
+            return cssClass;
+        }
+    }
+
+    private string badgeElementCssClass {
+        get {
+            string cssClass = "p-badge p-component";
+            if (!String.IsNullOrEmpty(Badge) && Badge.Length == 1) {
+                cssClass += " p-badge-no-gutter";
+            }
+            return cssClass;
+        }
+    }
+
+}

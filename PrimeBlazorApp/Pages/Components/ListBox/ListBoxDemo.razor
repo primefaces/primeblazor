@@ -1,0 +1,38 @@
+ @page "/listbox"
+ @using PrimeBlazorDemo.Data
+
+ <div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>ListBox</h1>
+            <p>ListBox is used to select one or more values from a list of items.</p>
+        </div>
+    </div>
+
+    <div class="content-section implementation">
+        <div class="card">
+            <h5>Basic</h5>
+            <PrimeListBox Options="@cities" @bind-Value="selectedCity" TItem="City" CssClass="mb-3">
+                <Item Context="city">
+                    @city.name
+                </Item>
+            </PrimeListBox>
+
+            Selected City: <span class="font-bold">@selectedCity?.name</span>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private City selectedCity { get; set; }
+
+    private IList<City> cities = new List<City>() {
+        new City("New York", "NY"),
+        new City("Rome", "RM"),
+        new City("London", "LDN"),
+        new City("Istanbul", "Ist"),
+        new City("Paris", "PRS")
+    };
+  
+}
