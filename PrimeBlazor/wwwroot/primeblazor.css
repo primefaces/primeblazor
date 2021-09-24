@@ -93,7 +93,7 @@ button {
     user-select: none;
 }
 
-/* Non vue overlay animations */
+/* Overlay animations */
 .p-connected-overlay {
     opacity: 0;
     transform: scaleY(0.8);
@@ -111,7 +111,7 @@ button {
     transition: opacity .1s linear;
 }
 
-/* Vue based overlay animations */
+/* Overlay animations with API */
 .p-connected-overlay-enter-from {
     opacity: 0;
     transform: scaleY(0.8);
@@ -127,27 +127,6 @@ button {
 
 .p-connected-overlay-leave-active {
     transition: opacity .1s linear;
-}
-
-/* Toggleable Content */
-.p-toggleable-content-enter-from,
-.p-toggleable-content-leave-to {
-    max-height: 0;
-}
-
-.p-toggleable-content-enter-to,
-.p-toggleable-content-leave-from {
-    max-height: 1000px;
-}
-
-.p-toggleable-content-leave-active {
-    overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
-}
-
-.p-toggleable-content-enter-active {
-    overflow: hidden;
-    transition: max-height 1s ease-in-out;
 }
 
 .p-sr-only {
@@ -356,4 +335,24 @@ button {
 .p-badge-no-gutter {
     padding: 0;
     border-radius: 50%;
+}
+
+@keyframes p-slidedown {
+    0%   { max-height: 0; }
+    100% { max-height: 1000px; }
+}
+
+@keyframes p-slideup {
+    0%   { max-height: 1000px; }
+    100% { max-height: 0; }
+}
+
+.p-slidedown {
+    animation: p-slidedown 1s ease-in-out;
+    overflow: hidden;
+}
+
+.p-slideup {
+    animation: p-slideup 0.45s cubic-bezier(0, 1, 0, 1) forwards;
+    overflow: hidden;
 }

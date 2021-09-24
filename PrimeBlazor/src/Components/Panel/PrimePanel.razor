@@ -1,8 +1,12 @@
 @namespace PrimeBlazor
 
-<div class="@containerCssClass @CssClass">
+<div class="@containerCssClass @CssClass" style="@Style">
     <div class="p-panel-header">
         <div>
+            @if (!String.IsNullOrWhiteSpace(HeaderText))
+            {
+                <span class="p-panel-title">@HeaderText</span>
+            }
             @Header
         </div>
         <div class="p-panel-icons">
@@ -11,22 +15,31 @@
             {
                 <button class="p-panel-header-icon p-panel-toggler p-link" @onclick="Toggle" type="button"
                     id="@(ariaId + "_header")" aria-controls="@(ariaId + "_content")" aria-expanded="@(!Collapsed)">
-                    <span class="@(Collapsed ? "pi pi-plus" : "pi pi-minus")"></span>
+                    <span class="@((Collapsed || collapsing) ? "pi pi-plus" : "pi pi-minus")"></span>
                 </button>
             }
         </div>
     </div>
-    <div class="p-toggleable-content" role="region" id="@(ariaId + "_content")" aria-labelledby="@(ariaId + "_header")" style="display: @(Collapsed ? "none" : "block")">
-        <div class="p-panel-content">
-            @Content
+    @if(!Collapsed) 
+    {
+        <div class="@contentCssClass" role="region" id="@(ariaId + "_content")" aria-labelledby="@(ariaId + "_header")">
+            <div class="p-panel-content">
+                @Content
+            </div>
         </div>
-    </div>
+    }
 </div>
 
 @code {
 
     [Parameter]
+    public string Style { get; set; }
+
+    [Parameter]
     public string CssClass { get; set; }
+
+    [Parameter]
+    public string HeaderText { get; set; }
 
     [Parameter]
     public bool Toggleable { get; set; }
@@ -46,9 +59,34 @@
     [Parameter]
     public RenderFragment Icons { get; set; }
 
-    public void Toggle() {
-        this.Collapsed = !this.Collapsed;
-        this.CollapsedChanged.InvokeAsync(this.Collapsed);
+    private bool collapsing;
+
+    private bool expanding;
+
+    public async Task Toggle() { 
+        if (expanding || collapsing) 
+        {
+            return;
+        }       
+
+        if (Collapsed)
+        {
+            expanding = true;
+            collapsing = false;
+            Collapsed = false;
+            await Task.Delay(450);
+            expanding = false;
+        }
+        else
+        {
+            collapsing = true;
+            expanding = false;
+            await Task.Delay(450);
+            collapsing = false;
+            Collapsed = true;
+        }
+
+        await this.CollapsedChanged.InvokeAsync(this.Collapsed);
     }
 
     private string containerCssClass 
@@ -60,6 +98,25 @@
             {
                 cssClass += " p-panel-toggleable";
             }
+            return cssClass;
+        }
+    }
+
+    private string contentCssClass
+    {
+        get
+        {
+            string cssClass = "p-toggleable-content";
+            if (collapsing)
+            {
+                cssClass += " p-slideup";
+            }
+
+            if (expanding)
+            {
+                cssClass += " p-slidedown";
+            }
+
             return cssClass;
         }
     }
