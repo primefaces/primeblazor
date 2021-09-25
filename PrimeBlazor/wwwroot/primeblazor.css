@@ -66,15 +66,6 @@
     top: -9999px;
 }
 
-@-webkit-keyframes p-fadein {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
-}
-@keyframes p-fadein {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
-}
-
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
@@ -347,6 +338,66 @@ button {
     100% { max-height: 0; }
 }
 
+@keyframes p-slideinleft {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes p-slideoutleft {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes p-slideinright {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes p-slideoutright{
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes p-slideintop {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes p-slideouttop {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+
+@keyframes p-slideinbottom {
+    0%   { transform: translateY(100%); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes p-slideoutbottom {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+}
+
+@keyframes p-scalein {
+    0%   { opacity: 0; transform: scale(0.7) }
+    100% { opacity: 1; transform: scale(1) }
+}
+
+@keyframes p-scaleout {
+    0%   { opacity: 1; transform: scale(1) }
+    100% { opacity: 0; transform: scale(0.7) }
+}
+
+@keyframes p-fadein {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes p-fadeout {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
+}
+
 .p-slidedown {
     animation: p-slidedown 1s ease-in-out;
     overflow: hidden;
@@ -355,4 +406,52 @@ button {
 .p-slideup {
     animation: p-slideup 0.45s cubic-bezier(0, 1, 0, 1) forwards;
     overflow: hidden;
+}
+
+.p-slideinleft {
+    animation: p-slideinleft 0.3s forwards;
+}
+
+.p-slideoutleft {
+    animation: p-slideoutleft 0.3s forwards;
+}
+
+.p-slideinright {
+    animation: p-slideinright 0.3s forwards;
+}
+
+.p-slideoutright {
+    animation: p-slideoutright 0.3s forwards;
+}
+
+.p-slideintop {
+    animation: p-slideintop 0.3s forwards;
+}
+
+.p-slideouttop {
+    animation: p-slideouttop 0.3s forwards;
+}
+
+.p-slideinbottom {
+    animation: p-slideinbottom 0.3s forwards;
+}
+
+.p-slideoutbottom {
+    animation: p-slideoutbottom 0.3s forwards;
+}
+
+.p-scalein {
+    animation: p-scalein 150ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.p-scaleout {
+    animation: p-scaleout 150ms cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+.p-fadein {
+    animation: p-fadein 300ms cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.p-fadeout {
+    animation: p-fadeout 300ms cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }

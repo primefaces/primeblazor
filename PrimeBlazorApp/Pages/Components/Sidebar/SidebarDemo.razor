@@ -1,0 +1,54 @@
+ @page "/sidebar"
+
+ <div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>Sidebar</h1>
+            <p>Sidebar is a panel component displayed as an overlay at the edges of the screen.</p>
+        </div>
+    </div>
+
+    <div class="content-section implementation">
+        <div class="card">
+            <PrimeButton icon="pi pi-arrow-right" @onclick="() => visibleLeft = true" CssClass="mr-2" />
+            <PrimeButton icon="pi pi-arrow-left" @onclick="() => visibleRight = true" CssClass="mr-2" />
+            <PrimeButton icon="pi pi-arrow-down" @onclick="() => visibleTop = true" CssClass="mr-2" />
+            <PrimeButton icon="pi pi-arrow-up" @onclick="() => visibleBottom = true" CssClass="mr-2" />
+            <PrimeButton icon="pi pi-th-large" @onclick="() => visibleFull = true" />
+        </div>
+
+        <PrimeSidebar @bind-Visible="visibleLeft">
+            <h3>Left Sidebar</h3>
+        </PrimeSidebar>
+
+        <PrimeSidebar @bind-Visible="visibleRight" Position="right">
+            <h3>Right Sidebar</h3>
+        </PrimeSidebar>
+
+        <PrimeSidebar @bind-Visible="visibleTop" Position="top">
+            <h3>Top Sidebar</h3>
+        </PrimeSidebar>
+
+        <PrimeSidebar @bind-Visible="visibleBottom" Position="bottom">
+            <h3>Bottom Sidebar</h3>
+        </PrimeSidebar>
+
+        <PrimeSidebar @bind-Visible="visibleFull" Position="full">
+            <h3>Full Screen</h3>
+        </PrimeSidebar>
+    </div>
+</div>
+
+@code {
+
+    private bool visibleLeft;
+
+    private bool visibleRight;
+
+    private bool visibleTop;
+
+    private bool visibleBottom;
+
+    private bool visibleFull;
+
+}

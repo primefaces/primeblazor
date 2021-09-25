@@ -1,0 +1,124 @@
+@namespace PrimeBlazor
+
+@if (Visible)
+{
+    <div class="@maskCssClass" @onclick="OnMaskClick">
+        <div class="@containerCssClass @CssClass" style="@Style" role="complementary" aria-modal="@Modal" @onclick="OnContainerClick">
+            <div class="p-sidebar-header">
+                @if (ShowCloseIcon)
+                {
+                    <button class="p-sidebar-close p-sidebar-icon p-link" @onclick="Hide" type="button">
+                        <span class="p-sidebar-close-icon pi pi-times" />
+                    </button>
+                }
+            </div>
+            <div class="p-sidebar-content">
+                @ChildContent
+            </div>
+        </div>
+    </div>
+}
+
+@code 
+{
+    private bool _visible;
+
+    [Parameter]
+    public bool Visible { 
+        get {
+            return _visible;
+        }
+        set {
+            _visible = value;
+        }
+    }
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public string Style { get; set; }
+
+    [Parameter]
+    public string Position { get; set; } = "left";
+
+    [Parameter]
+    public bool Modal { get; set; } = true;
+
+    [Parameter]
+    public bool ShowCloseIcon { get; set; } = true;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private bool leaving;
+
+    private bool containerClick;
+
+    private string containerCssClass {
+        get
+        {
+            string cssClass = "p-sidebar p-component p-sidebar-" + Position;
+            if (leaving)
+            {
+                cssClass += !fullScreen ? " p-slideout" + Position : " p-fadeout";
+            }
+            else if (Visible)
+            {
+                cssClass += !fullScreen ? " p-slidein" + Position : " p-fadein";
+            }
+            return cssClass;
+        }
+    }
+
+    private string maskCssClass {
+        get
+        {
+            if (fullScreen)
+            {
+                return null;
+            }
+            else
+            {
+                string cssClass = "p-sidebar-mask p-component-overlay p-component-overlay-enter";
+                cssClass += leaving ? " p-component-overlay-leave" : " p-component-overlay-enter";
+                return cssClass;
+            }
+        }
+    }
+
+    private bool fullScreen {
+        get
+        {
+            return Position.Equals("full");
+        }
+    }
+
+    public async Task Hide() {
+        leaving = true;
+        await Task.Delay(300);
+        leaving = false;
+        await VisibleChanged.InvokeAsync(false);
+    }
+
+    private void OnContainerClick()
+    {
+        if (Modal)
+        {
+            containerClick = true;
+        }
+    }
+
+    private void OnMaskClick()
+    {
+        if (Modal && !containerClick)
+        {
+            Hide();
+        }
+        containerClick = false;
+    }
+    
+}
