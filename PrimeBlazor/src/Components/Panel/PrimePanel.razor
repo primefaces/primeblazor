@@ -24,7 +24,7 @@
     {
         <div class="@contentCssClass" role="region" id="@(ariaId + "_content")" aria-labelledby="@(ariaId + "_header")">
             <div class="p-panel-content">
-                @Content
+                @ChildContent
             </div>
         </div>
     }
@@ -54,7 +54,7 @@
     public RenderFragment Header { get; set; }
 
     [Parameter]
-    public RenderFragment Content { get; set; }
+    public RenderFragment ChildContent { get; set; }
 
     [Parameter]
     public RenderFragment Icons { get; set; }
