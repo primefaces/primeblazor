@@ -1,0 +1,31 @@
+ @page "/toolbar"
+
+ <div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>Toolbar</h1>
+            <p>Toolbar is a grouping component for buttons and other content.</p>
+        </div>
+    </div>
+
+    <div class="content-section implementation">
+        <PrimeToolbar>
+            <PrimeToolbarStart>
+                <PrimeButton Label="New" Icon="pi pi-plus" Cssclass="mr-2" />
+                <PrimeButton Label="Upload" Icon="pi pi-upload" Cssclass="p-button-success" />
+                <i class="pi pi-bars p-toolbar-separator mr-2" />
+                <PrimeButton Label="Save" Icon="pi pi-check" Cssclass="p-button-warning"></PrimeButton>
+            </PrimeToolbarStart>
+
+            <PrimeToolbarEnd>
+                <PrimeButton Icon="pi pi-search" CssClass="mr-2" />
+                <PrimeButton Icon="pi pi-calendar" CssClass="p-button-success mr-2" />
+                <PrimeButton Icon="pi pi-times" CssClass="p-button-danger" />
+            </PrimeToolbarEnd>
+        </PrimeToolbar>
+    </div>
+</div>
+
+@code {
+
+}

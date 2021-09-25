@@ -112,11 +112,11 @@
         }
     }
 
-    private void OnMaskClick()
+    private async void OnMaskClick()
     {
         if (Modal && !containerClick)
         {
-            Hide();
+            await Hide();
         }
         containerClick = false;
     }

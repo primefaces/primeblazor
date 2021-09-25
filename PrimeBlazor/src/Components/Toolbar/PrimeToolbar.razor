@@ -1,0 +1,25 @@
+@namespace PrimeBlazor
+
+<div class="p-toolbar p-component @CssClass" role="toolbar">
+    <div class="p-toolbar-group-left">
+        @PrimeToolbarStart
+    </div>
+    <div class="p-toolbar-group-right">
+        @PrimeToolbarEnd
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Style { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public RenderFragment PrimeToolbarStart { get; set; }
+
+    [Parameter]
+    public RenderFragment PrimeToolbarEnd { get; set; }
+}
