@@ -1,0 +1,126 @@
+@namespace PrimeBlazor
+
+<fieldset class="@containerCssClass @CssClass" style="@Style">
+    <legend class="p-fieldset-legend">
+        @if (!Toggleable)
+        {
+            <span class="p-fieldset-legend-text" id="@(ariaId + "_header")">@LegendText</span>
+        }
+        else
+        {
+            <a tabindex="0" @onclick="Toggle" id="@(ariaId +  "_header")" aria-controls="@(ariaId + "_content")" aria-expanded="@(!Collapsed)">
+                <span class="p-fieldset-toggler pi @((Collapsed || collapsing) ? "pi-plus" : "pi-minus")"></span>
+                @if (!String.IsNullOrWhiteSpace(LegendText))
+                {
+                    <span class="p-fieldset-legend-text">@LegendText</span>
+                }
+                @Legend
+            </a>
+        }
+    </legend>
+    @if(!Collapsed) 
+    {
+        <div class="@contentCssClass" role="region" id="@(ariaId + "_content")" aria-labelledby="@(ariaId + "_header")">
+            <div class="p-fieldset-content">
+                @ChildContent
+            </div>
+        </div>
+    }
+</fieldset>
+
+@code {
+
+    [Parameter]
+    public string Style { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public string LegendText { get; set; }
+
+    [Parameter]
+    public bool Toggleable { get; set; }
+
+    [Parameter]
+    public bool Collapsed { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> CollapsedChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment Legend { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private bool collapsing;
+
+    private bool expanding;
+
+    public async Task Toggle() { 
+        if (expanding || collapsing) 
+        {
+            return;
+        }       
+
+        if (Collapsed)
+        {
+            expanding = true;
+            collapsing = false;
+            Collapsed = false;
+            await Task.Delay(450);
+            expanding = false;
+        }
+        else
+        {
+            collapsing = true;
+            expanding = false;
+            await Task.Delay(450);
+            collapsing = false;
+            Collapsed = true;
+        }
+
+        await this.CollapsedChanged.InvokeAsync(this.Collapsed);
+    }
+
+    private string containerCssClass 
+    {
+        get
+        {
+            string cssClass = "p-fieldset p-component";
+            if (Toggleable)
+            {
+                cssClass += " p-fieldset-toggleable";
+            }
+            return cssClass;
+        }
+    }
+
+    private string contentCssClass
+    {
+        get
+        {
+            string cssClass = "p-toggleable-content";
+            if (collapsing)
+            {
+                cssClass += " p-slideup";
+            }
+
+            if (expanding)
+            {
+                cssClass += " p-slidedown";
+            }
+
+            return cssClass;
+        }
+    }
+
+    private string ariaId 
+    {
+        get 
+        {
+            return Guid.NewGuid().ToString();
+        }
+    }
+}
