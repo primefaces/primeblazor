@@ -1,0 +1,46 @@
+ @page "/card"
+
+ <div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>Card</h1>
+            <p>Card is a flexible container component.</p>
+        </div>
+    </div>
+
+    <div class="content-section implementation">
+        <PrimeCard style="width: 25rem; margin-bottom: 2rem">
+            <PrimeCardTitle>
+                Simple Card
+            </PrimeCardTitle>
+            <ChildContent>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+            </ChildContent>
+        </PrimeCard>
+
+        <PrimeCard style="width: 25rem">
+            <PrimeCardHeader>
+                <img alt="user header" src="/images/demo/usercard.png" class="w-full">
+            </PrimeCardHeader>
+            <PrimeCardTitle>
+                Advanced Card
+            </PrimeCardTitle>
+            <PrimeCardSubTitle>
+                Card subtitle
+            </PrimeCardSubTitle>
+            <ChildContent>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+            </ChildContent>
+            <PrimeCardFooter>
+                <PrimeButton Icon="pi pi-check" Label="Save" />
+                <PrimeButton Icon="pi pi-times" Label="Cancel" CssClass="p-button-secondary" style="margin-left: .5rem" />
+            </PrimeCardFooter>
+        </PrimeCard>
+    </div>
+</div>
+
+@code {
+
+}
