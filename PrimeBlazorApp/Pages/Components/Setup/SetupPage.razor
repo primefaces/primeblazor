@@ -1,0 +1,119 @@
+﻿@page "/setup"
+
+@* Style block should be removed after adding prism-coy.css and _core.scss *@
+<style>
+    :not(pre) > code[class*=language-], pre[class*=language-] {
+        background-color: #fdfdfd;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin-bottom: 1em;
+    }
+
+    pre[class*=language-] {
+        position: relative;
+        margin: .5em 0;
+        overflow: visible;
+        padding: 0;
+    }
+
+    code[class*=language-], pre[class*=language-] {
+        color: #000;
+        background: none;
+        font-family: Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;
+        font-size: 1em;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        line-height: 1.5;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+    }
+
+        pre[class*=language-] code {
+            border-left: 10px solid var(--surface-d) !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            background: var(--surface-e) !important;
+            margin: 1em 0;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        pre[class*=language-] > code {
+            position: relative;
+            border-left: 10px solid #358ccb;
+            -webkit-box-shadow: -1px 0 0 0 #358ccb, 0 0 0 1px #dfdfdf;
+            box-shadow: -1px 0 0 0 #358ccb, 0 0 0 1px #dfdfdf;
+            background-color: #fdfdfd;
+            background-image: -webkit-gradient(linear,left top,left bottom,color-stop(50%,transparent),color-stop(50%,rgba(69,142,209,.04)));
+            background-image: linear-gradient(transparent 50%,rgba(69,142,209,.04) 0);
+            background-size: 3em 3em;
+            background-origin: content-box;
+            background-attachment: local;
+        }
+
+    code[class*=language-] {
+        max-height: inherit;
+        height: inherit;
+        padding: 0 1em;
+        display: block;
+        overflow: auto;
+    }
+</style>
+@* Style block should be removed after adding prism-coy.css and _core.scss *@
+
+<div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>Setup</h1>
+            <p>PrimeBlazor is an <i>under the development</i> rich set of open source native components for Blazor.</p>
+        </div>
+    </div>
+    <div class="content-section documentation">
+        <h5>Download</h5>
+        <p>PrimeBlazor <i>will be distributed</i> at NuGet Package Manager.</p>
+        <p>You can add them to your project in one of the following ways</p>
+
+
+        <p>Run the following command to download PrimeBlazor to your project.</p>
+        <pre class="language-js">
+        <code class="language-js">
+dotnet add package PrimeBlazor
+            </code>
+            </pre>
+        <p>Or add the project from the Visual NuGet Package Manager.</p>
+
+        <h5>Import</h5>
+        <p>
+            Open the <i>_Imports.razor</i> file of your Blazor application and add this following line:
+        </p>
+        <pre class="language-js">
+        <code class="language-js">&nbsp;
+@@using PrimeBlazor
+            </code>
+            </pre>
+
+        <h5>Styles</h5>
+        <p>
+            The css dependencies are as follows, note that you may change the theme with another one of your choice.
+        </p>
+        <p>
+            Open the <i>_Host.cshtml</i> file (Blazor Server App) or <i>wwwroot/index.html</i> (Blazor WebAssembly App) and include css dependencies.
+        </p>
+        <pre class="language-js">
+        <code class="language-js">
+_content<span class="token operator">/</span>PrimeBlazor<span class="token operator">/</span>themes<span class="token operator">/</span>saga-blue<span class="token operator">/</span>theme<span class="token punctuation">.</span>css
+_content<span class="token operator">/</span>PrimeBlazor<span class="token operator">/</span>primeblazor<span class="token punctuation">.</span>css
+<span class="token operator">/</span>styles<span class="token operator">/</span>primeflex<span class="token punctuation">.</span>min<span class="token punctuation">.</span>css
+<span class="token operator">/</span>icons<span class="token operator">/</span>primeicons<span class="token punctuation">.</span>css
+                </code>
+            </pre>
+
+    </div>
+</div>
