@@ -1,0 +1,42 @@
+@namespace PrimeBlazor
+
+<div class="@containerCssClass @CssClass" style="@Style" role="separator">
+    <div class="p-divider-content">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Style { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public string Align { get; set; }
+
+    [Parameter]
+    public string Layout { get; set; } = "horizontal";
+
+    [Parameter]
+    public string Type { get; set; } = "solid";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private string containerCssClass
+    {
+        get
+        {
+            string cssClass = "p-divider p-component";
+            string defaultAlign = Layout.Equals("vertical") ? "center" : "left";
+            cssClass += " p-divider-" + Layout;
+            cssClass += " p-divider-" + Type;
+            cssClass += " p-divider-" + (String.IsNullOrWhiteSpace(Align) ? defaultAlign : Align);
+
+            return cssClass;
+        }
+    }
+}
