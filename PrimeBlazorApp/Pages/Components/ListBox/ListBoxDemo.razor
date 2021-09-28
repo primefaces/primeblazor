@@ -13,9 +13,9 @@
         <div class="card">
             <h5>Basic</h5>
             <PrimeListBox Options="@cities" @bind-Value="selectedCity" TItem="City" CssClass="mb-3">
-                <Item Context="city">
+                <ItemTemplate Context="city">
                     @city.name
-                </Item>
+                </ItemTemplate>
             </PrimeListBox>
 
             Selected City: <span class="font-bold">@selectedCity?.name</span>

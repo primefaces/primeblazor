@@ -1,25 +1,25 @@
 @namespace PrimeBlazor
 
 <div class="p-card p-component @CssClass" style="@Style">
-    @if (PrimeCardHeader != null)
+    @if (HeaderTemplate != null)
     {
-        <div class="p-card-header">@PrimeCardHeader</div>
+        <div class="p-card-header">@HeaderTemplate</div>
     }
     <div class="p-card-body">
-        @if (PrimeCardTitle != null)
+        @if (TitleTemplate != null)
         {
-            <div class="p-card-title">@PrimeCardTitle</div>
+            <div class="p-card-title">@TitleTemplate</div>
         }
-        @if (PrimeCardSubTitle != null)
+        @if (SubtitleTemplate != null)
         {
-            <div class="p-card-subtitle">@PrimeCardSubTitle</div>
+            <div class="p-card-subtitle">@SubtitleTemplate</div>
         }
         <div class="p-card-content">
             @ChildContent
         </div>
-        @if (PrimeCardFooter != null)
+        @if (FooterTemplate != null)
         {
-            <div class="p-card-footer">@PrimeCardFooter</div>
+            <div class="p-card-footer">@FooterTemplate</div>
         }
     </div>
 </div>
@@ -33,17 +33,17 @@
     public string CssClass { get; set; }
     
     [Parameter]
-    public RenderFragment PrimeCardHeader { get; set; }
+    public RenderFragment HeaderTemplate { get; set; }
 
     [Parameter]
-    public RenderFragment PrimeCardTitle { get; set; }
+    public RenderFragment TitleTemplate { get; set; }
 
     [Parameter]
-    public RenderFragment PrimeCardSubTitle { get; set; }
+    public RenderFragment SubtitleTemplate { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public RenderFragment PrimeCardFooter { get; set; }
+    public RenderFragment FooterTemplate { get; set; }
 }

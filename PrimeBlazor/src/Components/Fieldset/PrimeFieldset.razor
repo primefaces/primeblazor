@@ -14,7 +14,7 @@
                 {
                     <span class="p-fieldset-legend-text">@LegendText</span>
                 }
-                @Legend
+                @LegendTemplate
             </a>
         }
     </legend>
@@ -49,7 +49,7 @@
     public EventCallback<bool> CollapsedChanged { get; set; }
 
     [Parameter]
-    public RenderFragment Legend { get; set; }
+    public RenderFragment LegendTemplate { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }

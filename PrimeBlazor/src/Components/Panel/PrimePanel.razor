@@ -7,7 +7,7 @@
             {
                 <span class="p-panel-title">@HeaderText</span>
             }
-            @Header
+            @HeaderTemplate
         </div>
         <div class="p-panel-icons">
             @Icons
@@ -51,7 +51,7 @@
     public EventCallback<bool> CollapsedChanged { get; set; }
 
     [Parameter]
-    public RenderFragment Header { get; set; }
+    public RenderFragment HeaderTemplate { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }

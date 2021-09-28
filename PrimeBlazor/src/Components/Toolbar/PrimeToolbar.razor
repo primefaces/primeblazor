@@ -2,10 +2,10 @@
 
 <div class="p-toolbar p-component @CssClass" role="toolbar">
     <div class="p-toolbar-group-left">
-        @PrimeToolbarStart
+        @StartContentTemplate
     </div>
     <div class="p-toolbar-group-right">
-        @PrimeToolbarEnd
+        @EndContentTemplate
     </div>
 </div>
 
@@ -18,8 +18,8 @@
     public string CssClass { get; set; }
 
     [Parameter]
-    public RenderFragment PrimeToolbarStart { get; set; }
+    public RenderFragment StartContentTemplate { get; set; }
 
     [Parameter]
-    public RenderFragment PrimeToolbarEnd { get; set; }
+    public RenderFragment EndContentTemplate { get; set; }
 }

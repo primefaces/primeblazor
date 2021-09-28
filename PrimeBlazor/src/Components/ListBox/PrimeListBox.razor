@@ -7,7 +7,7 @@
             <ul class="p-listbox-list">
                @foreach (TItem option in Options) 
                {
-                   <li class="p-listbox-item @(isSelected(option) ? "p-highlight": "")" @onclick="() => SelectOption(option)">@Item(option)</li>
+                   <li class="p-listbox-item @(isSelected(option) ? "p-highlight": "")" @onclick="() => SelectOption(option)">@ItemTemplate(option)</li>
                } 
             </ul>
         </div>
@@ -29,7 +29,7 @@
     public IList<TItem> Options { get; set; }
 
     [Parameter]
-    public RenderFragment<TItem> Item { get; set; }
+    public RenderFragment<TItem> ItemTemplate { get; set; }
 
     private async Task SelectOption(TItem option)
     {
