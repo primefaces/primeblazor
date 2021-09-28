@@ -1,0 +1,158 @@
+@namespace PrimeBlazor
+
+@if (_visible)
+{
+    <div class="@maskCssClass">
+        <div class="@containerCssClass @CssClass" style="@Style" role="dialog" aria-modal="@Modal" aria-labelledby="@ariaLabelledById">
+            @if (ShowHeader)
+            {
+                <div class="p-dialog-header">
+                    @if (!String.IsNullOrWhiteSpace(HeaderText))
+                    {
+                        <span class="p-dialog-title">@HeaderText</span>
+                    }
+                    @HeaderTemplate
+                    <div class="p-dialog-header-icons">
+                        @if (Closable)
+                        {
+                            <button class="p-dialog-header-icon p-dialog-header-close p-link" @onclick="Close" type="button" tabindex="-1">
+                                <span class="p-dialog-header-close-icon pi pi-times"></span>
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="p-dialog-content @ContentCssClass" style="@ContentStyle">
+                @ChildContent
+            </div>
+            @if (FooterTemplate != null || !String.IsNullOrWhiteSpace(FooterText))
+            {
+                <div class="p-dialog-footer">
+                    @FooterText
+                    @FooterTemplate
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public string Style { get; set; }
+
+    [Parameter]
+    public string ContentStyle { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public string ContentCssClass { get; set; }
+
+    [Parameter]
+    public string HeaderText { get; set; }
+
+    [Parameter]
+    public string FooterText { get; set; }
+
+    [Parameter]
+    public bool Modal { get; set; }
+
+    [Parameter]
+    public bool ShowHeader { get; set; } = true;
+
+    [Parameter]
+    public bool Closable { get; set; } = true;
+
+    [Parameter]
+    public string Position { get; set; } = "center";
+
+    [Parameter]
+    public RenderFragment HeaderTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment FooterTemplate { get; set; }
+
+    private bool _visible;
+
+    private bool leaving;
+
+    [Parameter]
+    public bool Visible { 
+        get {
+            return _visible;
+        }
+        set {
+            if (_visible && value == false)
+            {
+                Close();
+            }
+            else
+            {
+                _visible = value;
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    public async Task Close() {
+        leaving = true;
+        await Task.Delay(150);
+        leaving = false;
+        _visible = false;
+        await VisibleChanged.InvokeAsync(_visible);
+    }
+
+    private string containerCssClass {
+        get
+        {
+            string cssClass = "p-dialog p-component";
+            if (leaving)
+            {
+                cssClass += " p-scaleout";
+            }
+            else if (Visible)
+            {
+                cssClass += " p-scalein";
+            }
+            return cssClass;
+        }
+    }
+
+    private string maskCssClass {
+        get
+        {
+            string cssClass = "p-dialog-mask";
+            if (Modal)
+            {
+                cssClass += leaving ? " p-component-overlay p-component-overlay-leave" : " p-component-overlay p-component-overlay-enter";
+            }
+            cssClass += " p-dialog-" + Position;
+            return cssClass;
+        }
+    }
+
+    private string ariaId 
+    {
+        get 
+        {
+            return Guid.NewGuid().ToString();
+        }
+    }
+
+    private string ariaLabelledById 
+    {
+        get 
+        {
+            return String.IsNullOrWhiteSpace(HeaderText) ? null : ariaId + "_header";
+        }
+    }
+
+}

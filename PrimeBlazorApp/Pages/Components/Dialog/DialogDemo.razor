@@ -1,0 +1,119 @@
+ @page "/dialog"
+
+ <div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>Dialog</h1>
+            <p>Dialog is a container to display content in an overlay window.</p>
+        </div>
+    </div>
+
+    <div class="content-section implementation">
+        <div class="card">
+            <h5>Basic</h5>
+            <PrimeButton Label="Show" Icon="pi pi-external-link" @onclick="() => displayBasic = true" CssClass="mr-2" />
+            <PrimeDialog HeaderText="Header" @bind-Visible="displayBasic" Style="width: 50vw">
+                <ChildContent>
+                    <p class="m-0 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </ChildContent>
+                <FooterTemplate>
+                    <PrimeButton Label="No" Icon="pi pi-times" @onclick="() => displayBasic = false" CssClass="p-button-text"/>
+                    <PrimeButton Label="Yes" Icon="pi pi-check" @onclick="() => displayBasic = false" autofocus />
+                </FooterTemplate>
+            </PrimeDialog>
+
+            <PrimeButton Label="Long Content" Icon="pi pi-external-link" @onclick="() => displayBasic2 = true" />
+            <PrimeDialog HeaderText="Header" @bind-Visible="displayBasic2" Style="width: 50vw">
+                <ChildContent>
+                    <p class="m-0 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                        ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                        culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                    <p class="m-0 line-height-3">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+                        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
+                        qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
+                        quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
+                        vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+
+                    <p class="m-0 line-height-3">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
+                        similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio
+                        cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe
+                        eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+                </ChildContent>
+                <FooterTemplate>
+                    <PrimeButton Label="No" Icon="pi pi-times" @onclick="() => displayBasic2 = false" CssClass="p-button-text"/>
+                    <PrimeButton Label="Yes" Icon="pi pi-check" @onclick="() => displayBasic2 = false" autofocus />
+                </FooterTemplate>
+            </PrimeDialog>
+
+            <h5>Modal</h5>
+            <PrimeButton Label="Show" Icon="pi pi-external-link" @onclick="() => displayModal = true" />
+            <PrimeDialog HeaderText="Header" @bind-Visible="displayModal" Style="width: 50vw" Modal>
+                <ChildContent>
+                    <p class="m-0 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </ChildContent>
+                <FooterTemplate>
+                    <PrimeButton Label="No" Icon="pi pi-times" @onclick="() => displayModal = false" CssClass="p-button-text"/>
+                    <PrimeButton Label="Yes" Icon="pi pi-check" @onclick="() => displayModal = false" autofocus />
+                </FooterTemplate>
+            </PrimeDialog>
+
+            <h5>Position</h5>
+            <div class="grid flex-column">
+                <div class="col">
+                    <PrimeButton Label="Left" Icon="pi pi-arrow-right" @onclick="@(() => openPosition("left"))" CssClass="p-button-warning mr-2" />
+                    <PrimeButton Label="Right" Icon="pi pi-arrow-left" @onclick="@(() => openPosition("right"))" CssClass="p-button-warning" />
+                </div>
+                <div class="col">
+                    <PrimeButton Label="Top" Icon="pi pi-arrow-down" @onclick="@(() => openPosition("top"))" CssClass="p-button-warning mr-2" />
+                    <PrimeButton Label="TopLeft" Icon="pi pi-arrow-down" @onclick="@(() => openPosition("topleft"))" CssClass="p-button-warning mr-2" />
+                    <PrimeButton Label="TopRight" Icon="pi pi-arrow-down" @onclick="@(() => openPosition("topright"))" CssClass="p-button-warning" />
+                </div>
+                <div class="col">
+                    <PrimeButton Label="Bottom" Icon="pi pi-arrow-up" @onclick="@(() => openPosition("bottom"))" CssClass="p-button-warning mr-2" />
+                    <PrimeButton Label="BottomLeft" Icon="pi pi-arrow-up" @onclick="@(() => openPosition("bottomleft"))" CssClass="p-button-warning mr-2" />
+                    <PrimeButton Label="BottomRight" Icon="pi pi-arrow-up" @onclick="@(() => openPosition("bottomright"))" CssClass="p-button-warning" />
+                </div>
+            </div>
+
+            <PrimeDialog HeaderText="Header" @bind-Visible="displayPosition" style="width: 50vw" Position="@position" Modal>
+                <ChildContent>
+                    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </ChildContent>
+                <FooterTemplate>
+                    <PrimeButton Label="No" Icon="pi pi-times" @onclick="() => displayPosition = false" CssClass="p-button-text" />
+                    <PrimeButton Label="Yes" Icon="pi pi-check" @onclick="() => displayPosition = false" autofocus />
+                </FooterTemplate>
+            </PrimeDialog>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public bool displayBasic;
+
+    public bool displayBasic2;
+
+    public bool displayModal;
+
+    public bool displayPosition;
+
+    public string position = "center";
+
+    public void openPosition(string pos)
+    {
+        position = pos;
+        displayPosition = true;
+    }
+
+    
+
+}
