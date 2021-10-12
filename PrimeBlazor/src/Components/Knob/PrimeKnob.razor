@@ -1,0 +1,216 @@
+﻿@namespace PrimeBlazor
+@using System.Globalization
+
+<div class="@ContainerClass">
+    <svg viewBox="0 0 100 100" width="@Size" height="@Size" @onclick="OnClick"
+         @onmousedown="OnMouseDown" @onmouseup="OnMouseUp" @onmousemove="OnMouseMove">
+        <path d="@RangePath" stroke-width="@StrokeWidth" stroke="@RangeColor" class="p-knob-range"></path>
+        <path d="@ValuePath" stroke-width="@StrokeWidth" stroke="@ValueColor" class="p-knob-value"></path>
+        @if (ShowValue)
+        {
+            <text>
+                <text x="50" y="57" text-anchor="middle" fill="@TextColor" class="p-knob-text">@ValueToDisplay</text>
+            </text>
+        }
+    </svg>
+</div>
+
+@code {
+
+    private double radius = 40;
+    private double midX = 50;
+    private double midY = 50;
+    private double minRadians = 4 * Math.PI / 3;
+    private double maxRadians = -Math.PI / 3;
+    private bool mouseMoveActive = false;
+    private bool touchMoveActive = false;
+
+    [Parameter]
+    public int Value { get; set; }
+
+    [Parameter]
+    public int Size { get; set; } = 100;
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    [Parameter]
+    public bool Readonly { get; set; } = false;
+
+    [Parameter]
+    public int Step { get; set; } = 1;
+
+    [Parameter]
+    public int Min { get; set; } = 0;
+
+    [Parameter]
+    public int Max { get; set; } = 100;
+
+    [Parameter]
+    public string ValueColor { get; set; } = "var(--primary-color, Black)";
+
+    [Parameter]
+    public string RangeColor { get; set; } = "var(--surface-d, LightGray)";
+
+    [Parameter]
+    public string TextColor { get; set; } = "var(--text-color-secondary, Black)";
+
+    [Parameter]
+    public int StrokeWidth { get; set; } = 14;
+
+    [Parameter]
+    public bool ShowValue { get; set; } = true;
+
+    [Parameter]
+    public string ValueTemplate { get; set; } = "{value}";
+
+    public string ContainerClass
+    {
+        get => "p-knob p-component" + (Disabled ? " p-disabled" : "");
+
+
+    }
+
+    public string RangePath
+    {
+        get => $"M {MinX.ToString(CultureInfo.InvariantCulture)} {MinY.ToString(CultureInfo.InvariantCulture)} A {radius.ToString(CultureInfo.InvariantCulture)} {radius.ToString(CultureInfo.InvariantCulture)} 0 1 1 {MaxX.ToString(CultureInfo.InvariantCulture)} {MaxY.ToString(CultureInfo.InvariantCulture)}";
+    }
+
+    public string ValuePath
+    {
+        get => $"M {ZeroX.ToString(CultureInfo.InvariantCulture)} {ZeroY.ToString(CultureInfo.InvariantCulture)} A {radius.ToString(CultureInfo.InvariantCulture)} {radius.ToString(CultureInfo.InvariantCulture)} 0 {LargeArc} {Sweep} {ValueX.ToString(CultureInfo.InvariantCulture)} {ValueY.ToString(CultureInfo.InvariantCulture)}";
+    }
+
+    public double ZeroRadians
+    {
+        get
+        {
+            if (Min > 0 && Max > 0)
+                return MapRange(Min, Min, Max, minRadians, maxRadians);
+            else
+                return MapRange(0, Min, Max, minRadians, maxRadians);
+        }
+    }
+    public double ValueRadians
+    {
+        get
+        {
+            return MapRange(Value, Min, Max, minRadians, maxRadians);
+        }
+    }
+    public double MinX
+    {
+        get => midX + Math.Cos(minRadians) * radius;
+    }
+    public double MinY
+    {
+        get => midY - Math.Sin(minRadians) * radius;
+    }
+
+    public double MaxX
+    {
+        get => midX + Math.Cos(maxRadians) * radius;
+    }
+    public double MaxY
+    {
+        get => midY - Math.Sin(maxRadians) * radius;
+    }
+
+    public double ZeroX
+    {
+        get => midX + Math.Cos(ZeroRadians) * radius;
+    }
+    public double ZeroY
+    {
+        get => midY - Math.Sin(ZeroRadians) * radius;
+    }
+    public double ValueX
+    {
+        get => midX + Math.Cos(ValueRadians) * radius;
+    }
+    public double ValueY
+    {
+        get => midY - Math.Sin(ValueRadians) * radius;
+    }
+    public int LargeArc
+    {
+        get => Math.Abs(ZeroRadians - ValueRadians) < Math.PI ? 0 : 1;
+    }
+    public int Sweep
+    {
+        get => ValueRadians > ZeroRadians ? 0 : 1;
+    }
+    public string ValueToDisplay
+    {
+        get => ValueTemplate.Replace("{value}", Value.ToString());
+    }
+    private void UpdateValue(double offsetX, double offsetY)
+    {
+        var dx = offsetX - Size / 2;
+        var dy = Size / 2 - offsetY;
+        var angle = Math.Atan2(dy, dx);
+        var start = -Math.PI / 2 - Math.PI / 6;
+
+        UpdateModel(angle, start);
+    }
+
+    private void UpdateModel(double angle, double start)
+    {
+        double mappedValue;
+        if (angle > maxRadians)
+            mappedValue = MapRange(angle, minRadians, maxRadians, Min, Max);
+        else if (angle < start)
+            mappedValue = MapRange(angle + 2 * Math.PI, minRadians, maxRadians, Min, Max);
+        else
+            return;
+        double newValue = Math.Round((mappedValue - Min) / Step) * Step + Min;
+
+        Value = (int)newValue;
+
+    }
+
+    private double MapRange(double x, double inMin, double inMax, double outMin, double outMax)
+    {
+        return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    private void OnClick(MouseEventArgs e)
+    {
+        if (!Disabled && !Readonly)
+        {
+            UpdateValue(e.OffsetX, e.OffsetY);
+        }
+
+    }
+
+    public void OnMouseDown(MouseEventArgs e)
+    {
+        if (!Disabled && !Readonly)
+        {
+
+            mouseMoveActive = true;
+        }
+    }
+
+    public void OnMouseUp(MouseEventArgs e)
+    {
+        if (!Disabled && !Readonly)
+        {
+
+            mouseMoveActive = false;
+        }
+    }
+
+
+    private void OnMouseMove(MouseEventArgs e)
+    {
+        if (!Disabled && !Readonly && mouseMoveActive)
+        {
+            UpdateValue(e.OffsetX, e.OffsetY);
+        }
+    }
+
+   
+}
+
+
