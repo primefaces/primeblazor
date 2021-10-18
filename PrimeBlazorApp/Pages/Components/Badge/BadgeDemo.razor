@@ -1,0 +1,35 @@
+ @page "/badge"
+
+<div>
+    <div class="content-section introduction">
+        <div class="feature-intro">
+            <h1>Badge</h1>
+            <p>Badge is a small status indicator for another element.</p>
+        </div>
+    </div>
+    <div class="content-section implementation">
+        <div class="card">
+            <h5>Numbers</h5>
+            <div class="badges">
+                <PrimeBadge Value="2" CssClass="p-mr-2" />
+                <PrimeBadge Value="8" Severity="success" CssClass="p-mr-2" />
+                <PrimeBadge Value="4" Severity="info" CssClass="p-mr-2" />
+                <PrimeBadge Value="12" Severity="warning" CssClass="p-mr-2" />
+                <PrimeBadge Value="3" Severity="danger" />
+            </div>
+
+            <h5>Sizes</h5>
+            <div class="badges">
+                <PrimeBadge Value="2" CssClass="p-mr-2" />
+                <PrimeBadge Value="4" Size="large" Severity="warning" CssClass="p-mr-2" />
+                <PrimeBadge Value="6" Size="xlarge" Severity="success" CssClass="p-mr-2" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}
+
+

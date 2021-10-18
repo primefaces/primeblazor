@@ -1,0 +1,58 @@
+@namespace PrimeBlazor
+
+<span class="@containerClass @CssClass">
+    @Value
+</span>
+
+@code {
+
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public string Size { get; set; }
+
+    [Parameter]
+    public string Severity { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    private string containerClass {
+        get {
+            string cssClass = "p-badge p-component";
+
+            if (!String.IsNullOrEmpty(Value) && Value.Length == 1) {
+                cssClass += " p-badge-no-gutter";
+            }
+
+            if (!String.IsNullOrEmpty(Size)) {
+                if (Size.Equals("large")) {
+                    cssClass += " p-badge-lg";
+                }
+                if (Size.Equals("xlarge")) {
+                    cssClass += " p-badge-xl";
+                }
+            }
+            
+            if (!String.IsNullOrEmpty(Severity)) {
+                if (Severity.Equals("info")) {
+                    cssClass += " p-badge-info";
+                }
+                if (Severity.Equals("success")) {
+                    cssClass += " p-badge-success";
+                }
+                if (Severity.Equals("warning")) {
+                    cssClass += " p-badge-warning";
+                }
+                if (Severity.Equals("danger")) {
+                    cssClass += " p-badge-danger";
+                }
+            }
+
+
+            return cssClass;
+        }
+    }
+
+}
